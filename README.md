@@ -1,3 +1,74 @@
+# Company Email Format Viewer
+
+A simple web application to view email formats for different companies. This helps in understanding how email addresses are formatted at various companies.
+
+## Current Features
+- Search companies by name
+- View email format patterns
+- Dark mode UI for better readability
+
+## Adding New Company Email Formats
+
+To add a new company's email format:
+
+1. Fork this repository
+2. Create a new branch: `add-company-name`
+3. Add a new file in the `app/emailFormats` directory:
+   - Filename: `CompanyName.txt`
+   - Content: The email format pattern using placeholders
+   
+   Example formats:
+   ```
+   Juspay: <firstname>.<lastname>@juspay.in
+   New Relic: <firstcharacteroffirstname>.<lastname>@newrelic.com
+   ```
+
+4. Create a Pull Request with the following information:
+   - Title: `Add [Company Name] email format`
+   - Description: 
+     - Company name
+     - Email format pattern
+     - (Optional) Source or reference for the format
+
+### Format Placeholders
+Use these placeholders in your email format:
+- `<firstname>` - Full first name
+- `<lastname>` - Full last name
+- `<firstcharacteroffirstname>` - First character of the first name
+
+### Example PR Process
+```bash
+# Fork and clone the repository
+git clone https://github.com/yourusername/email.git
+cd email
+
+# Create a new branch
+git checkout -b add-google
+
+# Add the email format file
+echo "<firstname>.<lastname>@google.com" > app/emailFormats/Google.txt
+
+# Commit and push
+git add app/emailFormats/Google.txt
+git commit -m "Add Google email format"
+git push origin add-google
+```
+
+Then create a Pull Request on GitHub with your changes.
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

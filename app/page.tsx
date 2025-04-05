@@ -1,56 +1,50 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+
+type EmailFormats = {
+  [key: string]: string;
+};
+
+const EMAIL_FORMATS: EmailFormats = {
+  'Juspay': '<firstname>.<lastname>@juspay.in',
+  'New Relic': '<firstcharacteroffirstname>.<lastname>@newrelic.com'
+};
 
 export default function Home() {
-  const [companies, setCompanies] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [emailFormat, setEmailFormat] = useState<string>('');
-  const [message, setMessage] = useState<string>('');
-
-  const loadCompanies = async () => {
-    try {
-      const response = await fetch('/api/companies');
-      const data = await response.json();
-      setCompanies(data.companies);
-    } catch (error) {
-      console.error('Error loading companies:', error);
-      setMessage('Error loading companies');
-    }
-  };
-
-  const loadEmailFormat = async (company: string) => {
-    try {
-      const response = await fetch(`/api/emailFormat?company=${company}`);
-      const data = await response.json();
-      setEmailFormat(data.format);
-    } catch (error) {
-      console.error('Error loading email format:', error);
-      setMessage('Error loading email format');
-    }
-  };
-
-  useEffect(() => {
-    loadCompanies();
-  }, []);
+  const [selectedCompany, setSelectedCompany] = useState<string>('');
 
   // Filter companies based on search query
-  const filteredCompanies = companies.filter(company =>
+  const filteredCompanies = Object.keys(EMAIL_FORMATS).filter(company =>
     company.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleCompanyClick = (company: string) => {
+    setEmailFormat(EMAIL_FORMATS[company]);
+    setSelectedCompany(company);
+    setSearchQuery(''); // Clear search after selection
+  };
 
   return (
     <main className="min-h-screen p-8 max-w-4xl mx-auto bg-gray-900">
       <h1 className="text-3xl font-bold mb-8 text-white">Company Email Format Viewer</h1>
 
-      {/* View email formats */}
       <div className="bg-gray-800 p-6 rounded-lg shadow-xl border border-gray-700">
-        <h2 className="text-xl font-semibold mb-4 text-white">View Email Formats</h2>
+        {/* Selected Company and Email Format Display */}
+        {emailFormat && (
+          <div className="mb-8 p-4 bg-gray-700 rounded-lg border border-gray-600">
+            <h3 className="text-lg font-medium text-gray-200 mb-2">
+              {selectedCompany}
+            </h3>
+            <pre className="text-gray-200 font-medium">{emailFormat}</pre>
+          </div>
+        )}
+
+        <h2 className="text-xl font-semibold mb-4 text-white">Search Company</h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="search" className="block text-sm font-medium text-gray-300">
-              Search Company
-            </label>
             <input
               type="text"
               id="search"
@@ -61,37 +55,26 @@ export default function Home() {
             />
           </div>
 
-          {/* Display filtered companies */}
-          <div className="mt-4 space-y-2">
-            {filteredCompanies.length > 0 ? (
-              filteredCompanies.map((company) => (
-                <button
-                  key={company}
-                  onClick={() => loadEmailFormat(company)}
-                  className="block w-full text-left px-4 py-2 rounded-md text-gray-200 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
-                >
-                  {company}
-                </button>
-              ))
-            ) : (
-              <p className="text-gray-400">No companies found</p>
-            )}
-          </div>
-
-          {emailFormat && (
-            <div className="mt-6">
-              <h3 className="text-lg font-medium text-gray-200 mb-2">Email Format:</h3>
-              <pre className="bg-gray-700 p-4 rounded-md whitespace-pre-wrap text-gray-200 border border-gray-600">{emailFormat}</pre>
+          {/* Display filtered companies only when searching */}
+          {searchQuery && (
+            <div className="mt-4 space-y-2">
+              {filteredCompanies.length > 0 ? (
+                filteredCompanies.map((company) => (
+                  <button
+                    key={company}
+                    onClick={() => handleCompanyClick(company)}
+                    className="block w-full text-left px-4 py-2 rounded-md text-gray-200 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                  >
+                    {company}
+                  </button>
+                ))
+              ) : (
+                <p className="text-gray-400">No companies found</p>
+              )}
             </div>
           )}
         </div>
       </div>
-
-      {message && (
-        <div className="mt-4 p-4 rounded-md bg-indigo-900 text-indigo-200 border border-indigo-700">
-          {message}
-        </div>
-      )}
     </main>
   );
 }
