@@ -4,6 +4,11 @@ const companyList = document.getElementById('companyList');
 const formatDisplay = document.getElementById('formatDisplay');
 const selectedCompanyElement = document.getElementById('selectedCompany');
 const emailFormatElement = document.getElementById('emailFormat');
+const companyCountElement = document.getElementById('companyCount');
+
+// Initialize company count
+const totalCompanies = Object.keys(EMAIL_FORMATS).length;
+companyCountElement.textContent = `${totalCompanies} ${totalCompanies === 1 ? 'company' : 'companies'}`;
 
 // Event Listeners
 searchInput.addEventListener('input', handleSearch);

@@ -151,4 +151,19 @@ h2 {
         width: 100%;
         justify-content: center;
     }
+}
+
+.search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.company-count {
+    font-size: 0.875rem;
+    color: rgb(156, 163, 175);
+    padding: 0.25rem 0.75rem;
+    background-color: rgb(55, 65, 81);
+    border-radius: 9999px;
 } 
