@@ -1,14 +1,10 @@
-const isProd = process.env.NODE_ENV === 'production';
-
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  output: 'export',  // Enable static exports
   images: {
-    unoptimized: true, // Disable default image optimization
+    unoptimized: true, // Required for static export
   },
-  assetPrefix: isProd ? '/company-email-formats/' : '',
-  basePath: isProd ? '/company-email-formats' : '',
-  output: 'export',
-  // Disable API routes since we're using static export
+  // No API routes needed since we're using static files
   trailingSlash: true,
 };
 
