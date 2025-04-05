@@ -1,1 +1,0 @@
-<firstcharacteroffirstname>.<lastname>@newrelic.com 
