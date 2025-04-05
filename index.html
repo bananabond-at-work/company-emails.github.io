@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Email Format Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Company Email Format Viewer</h1>
+
+        <div class="card">
+            <!-- Selected Company and Email Format Display -->
+            <div id="formatDisplay" class="format-display hidden">
+                <h3 id="selectedCompany"></h3>
+                <pre id="emailFormat"></pre>
+            </div>
+
+            <h2>Search Company</h2>
+            <div class="search-container">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Type to search companies..."
+                />
+            </div>
+
+            <!-- Company List -->
+            <div id="companyList" class="company-list hidden"></div>
+        </div>
+    </main>
+    <script src="emailFormats.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 
